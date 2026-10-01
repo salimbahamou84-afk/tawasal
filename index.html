@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+  <style>
+    body {
+      background:#00ffed;
+    }
+    * {
+      outline: none;
+    }
+    input{
+      width: 150px;
+      margin: auto;
+    }
+    #posts {
+      display: flex;
+      flex-flow: column;
+      gap: 5px;
+    }
+    button {
+     width: 75px;
+    border-radius: 20px;
+    aspect-ratio: 2/1;
+      background: black;
+      color:white;
+      margin: auto;
+    }
+
+    #all {
+      margin:30px 0;
+      width: 100%;
+      display: flex;
+      flex-flow:row;
+      gap:1px;
+    }
+    #post {
+      width:50%;
+      height: 150px;
+      background: #135095;
+      padding: 10px;
+      margin:auto;
+      display:none;
+      flex-flow: column;
+      gap: 10px;
+    }
+   #write {
+      width: 150px;
+      aspect-ratio: 2/1;
+     margin: auto;
+     
+    }
+    #inform {
+      margin: auto;
+     display: flex;
+      padding: 30px;
+      flex-flow:column;
+      gap:15px;
+      background-color:#ffffff;
+      width: 50%;
+      height: 150px;
+
+    }
+    #name { 
+        background:#123456;
+        border-radius: 20px;
+        display: flex; 
+        flex-flow: column;
+        place-self: center;
+    }
+    #xy {
+        background:none;
+      color: white;
+        width:250px; 
+      overflow-x: scroll;
+    }
+    #stor {
+        background: none;
+      color: white;
+    }
+    #btns {
+      display:flex;
+      flex-flow:row; 
+      gap:10px;
+    }
+    .like,#coment {
+      background: none;
+      border: none;
+   }
+    #btn1 {
+      width:100px;
+      aspect-ratio: 2/1;
+      margin-top: 10px;
+    }
+    #nameapp {
+          text-align: center;
+    font-size: 50px;
+    font-weight: 900;
+    background: linear-gradient(135deg, blue, green);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+      font-family: Brush Script MT,cursive;
+    }
+    #phot {
+      width: 30px;
+      height: 30px;
+      border-radius:50%;
+    }
+    #yx {
+     background-color:rgba(red, green, blue, 1);
+      width: 50%;
+      display: flex;
+      flex-flow: row;
+      gap: 5px;
+      place-items: center;
+      
+      }
+    #postimg {
+      width:200px;
+      height: 300px;
+    margin: auto;
+    }
+  #postimg:focus {
+    zoom: 2;
+    position: relative;
+    top: 30px;
+  }
+  #message {
+    width: 200px;
+    height: 50px;
+    background: rgba( 55, 29, 255, .7);
+    place-content: center;
+    text-align: center;
+    color: white;
+    border-radius: 20px;
+    position: fixed;
+    top: 400px;
+    left: 80px;
+    display: none;
+  }
+  </style>
+<body>
+  <div id="nameapp">tawasal</div>
+  <header id="all">
+     <div id="inform">
+    <input type="text" placeholder="username" id="nome">
+    <input type="password" placeholder="password" id="pword">
+    <input type="file" accept="image/*" name="" id="profile">
+    <button id="btn">دخول</button>
+  </div>
+  <div id="post">
+    <input type="file" name="" accept="image/*" id="sss">
+    <textarea id="write"></textarea>
+    <button id="btn1">نشر</button>
+  </div>
+  </header>
+ <section id="posts">
+   
+ </section>
+<div id="message"></div>
+  <script>
+inform= document.getElementById("inform")
+nome=document.getElementById("nome")
+btn=document.getElementById("btn")
+write = document.getElementById("write")
+posts=document.getElementById("posts")
+post= document.getElementById("post")
+btn1=document.getElementById("btn1")
+pword=document.getElementById("pword") 
+   profile.addEventListener('change', function() {
+    const file = this.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        photopro = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }); 
+ sss.addEventListener('change', function() {
+    const ffile = this.files[0];
+    if (ffile) {
+      const reader = new FileReader();
+      reader.onload = function(f) {
+        profimg = f.target.result;
+      };
+      reader.readAsDataURL(ffile);
+    }
+  }); 
+  let photopro
+  let profimg
+users=[]
+if(localStorage.nme != null) {
+  users=JSON.parse(localStorage.nme)
+}else {
+  users=[]
+}
+function notifi(msg) {
+ message.innerHTML = msg
+message.style.display = "block"
+setTimeout(()=>{
+  message.style.display = "none"
+},2000)
+}
+btn.addEventListener("click",()=>{
+if (nome.value != "" && pword.value != "") {
+  post.style.display="flex"
+  inform.style.display="none"
+infuser={
+  arbi:photopro,
+  user:nome.value,
+  code:pword.value
+}
+  console.log(users)
+btn1.addEventListener("click",()=>{
+if (write.value != "") {
+  infuser.city = write.value
+ infuser.pfimg= profimg
+  users.push(infuser)
+  
+localStorage.setItem("nme",JSON.stringify(users))  
+  shaw() 
+
+ function  shaw() {
+  table =''
+  for(i=0;i<users.length;i++){
+    
+    if(users[i].pfimg == undefined && users[i].arbi == undefined){
+     table += `<header id="name">
+    <div id="yx">
+    <svg width="30" height="30">
+  <circle cx="15" cy="15" r="15" fill="skyblue" />
+  </svg>
+    <h2 id="stor">${users[i].user}</h2>
+    </div>
+    <span id="xy">${users[i].city}</span>
+    <div id="btns">
+    <button class="like">🤍</button>
+    </div>
+    </header>` 
+    } else if (users[i].arbi == undefined ) {
+    table += `<header id="name">
+    <div id="yx">
+    <svg width="30" height="30">
+  <circle cx="15" cy="15" r="15" fill="skyblue" />
+  </svg>
+    <h2 id="stor">${users[i].user}</h2>
+    </div>
+    <span id="xy">${users[i].city}</span>
+    <img src="${users[i].pfimg}" id="postimg">
+    <div id="btns">
+    <button class="like">🤍</button>
+    </div>
+    </header>`
+    }else if (users[i].pfimg == undefined) {
+    table += `<header id="name">
+    <div id="yx">
+    <img src="${users[i].arbi}" id="phot">
+    <h2 id="stor">${users[i].user}</h2>
+    </div>
+    <span id="xy">${users[i].city}</span>
+    <button class="like">🤍</button>
+    </div>
+    </header>`
+  }
+    else {
+      table += `<header id="name">
+    <div id="yx">
+    <img src="${users[i].arbi}" id="phot">
+    <h2 id="stor">${users[i].user}</h2>
+    </div>
+    <span id="xy">${users[i].city}</span>
+    <img src="${users[i].pfimg}" id="postimg">
+    <div id="btns">
+    <button class="like">🤍</button>
+    </div>
+    </header>`
+    }
+  posts.innerHTML= table
+
+  like = document.querySelectorAll(".like")
+  let i1 = 1
+  let c = 0
+like.forEach(bt=>{
+  bt.addEventListener("click",()=>{
+    c++
+  if (c%2 == 1) {
+    bt.innerHTML = `🩷${i1}`
+  } else {
+    bt.innerHTML = `🤍`
+  }     
+  })
+})
+  }
+  }
+} else {
+notifi("يرجى كتابة منشور لا يقبل منشور فارغ")
+}
+ 
+  })
+} else {
+notifi("يرجى ادخال معلوماتك")
+}
+  
+   })
+  </script>
+</body>
+</html>
